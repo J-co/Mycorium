@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+
 import Adafruit_DHT
 
 sensor = Adafruit_DHT.DHT11
