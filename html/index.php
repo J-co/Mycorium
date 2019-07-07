@@ -5,12 +5,9 @@
 	</head>
 <body>
 
-<form action="DHT11_MakeMeasurement.php" method="get">
-  <input type="submit" value="Run DHT11 Measurement">
-</form>
 
 	
-
+<button type="button" onClick="submitForm('DHT11_MakeMeasurement.php');" >Run DHT11 Measurement</button>
 
 <button type="button" onClick="submitForm('humidifier_on.php');" >Humidifier On</button>
 	
