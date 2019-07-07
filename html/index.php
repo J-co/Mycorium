@@ -26,7 +26,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'humidifier_on.php',
+                url: 'script.php',
                 success: function(data) {
                     alert(data);
                     $("p").text(data);
