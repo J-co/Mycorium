@@ -18,9 +18,9 @@
   <input type="submit" value="Turn off humidifier">
 </form>
 
-<button type="button" onClick"submitForm('humidifier_on.php')">Humidifier On</button>
+<button type="button" onClick"submitForm('humidifier_on.php');">Humidifier On</button>
 	
-<button type="button" onClick"submitForm('humidifier_off.php')">Humidifier Off</button>
+<button type="button" onClick"submitForm('humidifier_off.php;')">Humidifier Off</button>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript">
@@ -36,6 +36,8 @@ function submitForm(url){
     });
 }
 	
+//Call AJAX:
+    //$(document).ready(submitForm);
 	
 	
 </script>
