@@ -1,7 +1,7 @@
 
 <html>
 	<head>
-	<title>Daten aus einer Datenbank abrufen</title>
+	<title>Mighty Mycorium</title>
 	</head>
 <body>
 
@@ -17,6 +17,10 @@
 <form action="humidifier_off.php" method="get">
   <input type="submit" value="Turn off humidifier">
 </form>
+
+<input type="submit" class="button" name="insert" value="insert" />
+	
+	
 <?php
 $hostname = 'localhost';
 $username = 'monitor';
