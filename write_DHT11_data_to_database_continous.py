@@ -36,7 +36,7 @@ while True:
 	    curs.execute ("""INSERT INTO DHT11
 	            values(NOW(), %f, %f)"""%(humidity,temperature))
 
-	time.sleep(120)	    
+	time.sleep(60)	    
 
 
 	    
