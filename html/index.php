@@ -20,6 +20,7 @@
 
 <button type="button">Click Me</button>
 <p></p>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("button").click(function(){
