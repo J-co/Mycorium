@@ -18,24 +18,26 @@
   <input type="submit" value="Turn off humidifier">
 </form>
 
-<button type="button">Click Me</button>
-<p></p>
+<button type="button" onClick"submitForm(humidifier_on.php)">Humidifier On</button>
+	
+<button type="button" onClick"submitForm(humidifier_off.php)">Humidifier Off</button>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("button").click(function(){
-
-            $.ajax({
-                type: 'POST',
-                url: 'script.php',
-                success: function(data) {
-                    alert(data);
-                    $("p").text(data);
-
-                }
-            });
-   });
-});
+function submitForm(url){
+    var data = $("$update-form").serialize();
+    $.ajax({
+        type : 'POST',
+        url  : url,
+        data : data,
+        success :  function(data){
+            $(".display").html(data);
+        }
+    });
+}
+	
+	
+	
 </script>
 	
 	
