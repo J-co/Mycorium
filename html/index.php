@@ -19,6 +19,21 @@
 </form>
 
 <input type="submit" class="button" name="insert" value="insert" />
+
+<script src="jquery-3.4.1.min.js">
+	$(document).ready(function(){
+    $('.button').click(function(){
+        //var clickBtnValue = $(this).val();
+        var ajaxurl = 'humidifier_on.php',
+        data =  {};
+        $.post(ajaxurl, data, function (response) {
+            // Response div goes here.
+            alert("action performed successfully");
+        });
+    });
+
+});
+</script>
 	
 	
 <?php
