@@ -6,11 +6,17 @@
 <body>
 
 <form action="DHT11_MakeMeasurement.php" method="get">
-  <input type="submit" value="Run me now!">
+  <input type="submit" value="Run DHT11 Measurement">
 </form>
 
+	
+<form action="humidifier_on.php" method="get">
+  <input type="submit" value="Turn on humidifier">
+</form>	
 
-
+<form action="humidifier_off.php" method="get">
+  <input type="submit" value="Turn off humidifier">
+</form>
 <?php
 $hostname = 'localhost';
 $username = 'monitor';
