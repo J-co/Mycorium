@@ -64,14 +64,3 @@ if __name__ == "__main__":
     httpServer.listen(options.port)
     print "Listening on port:", options.port
     tornado.ioloop.IOLoop.instance().start()
-
-
-# RPi functions
-
-def humidifierOn():
-
-
-def humidifierOff():
-
-
-def readAdafruitSensor():
