@@ -39,9 +39,7 @@
       sendMessage = function(message) {
         socket.send(message);
       };
-      $("#green_on").click(function() {
-        socket.send("off_g");
-      });
+      $("#green_on").click(sendMessage("Click"));
     </script>
   </body>
 </html>
