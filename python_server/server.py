@@ -7,6 +7,13 @@ import tornado.websocket
 from tornado.options import define, options
 define("port", default=8080, help="run on the given port", type=int)
  
+
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+
+humidifier_pin = 13
+GPIO.setup(humidifier_pin,GPIO.OUT)
+
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('index.html')
@@ -19,6 +26,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         print 'message received %s' % message
         self.write_message('message received %s' % message)
+        if message=="humidifier_on":            
+            GPIO.output(humidifier_pin,GPIO.LOW)
+        if message=="humidifier_off":            
+            GPIO.output(humidifier_pin,GPIO.HIGH)
  
     def on_close(self):
         print 'connection closed'

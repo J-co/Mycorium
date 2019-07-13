@@ -17,7 +17,8 @@
       <p>Here you can turn on/off LED's connected to the Raspberry PI.</p>
       Green:
       <p>
-        <input type="button" id="green_on" value="ON" />
+        <input type="button" id="humidifier_on" value="Humidifier On" />
+        <input type="button" id="humidifier_off" value="Humidifier Off" />
       </p>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -39,7 +40,12 @@
       sendMessage = function(message) {
         socket.send(message);
       };
-      $("#green_on").click(sendMessage("Click"));
+      $("#humidifier_on").click(function() {
+        socket.send("humidifier_on");
+      });
+      $("#humidifier_off").click(function() {
+        socket.send("humidifier_off");
+      });
     </script>
   </body>
 </html>
