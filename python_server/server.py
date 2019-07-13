@@ -36,11 +36,17 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print 'message received %s' % message
         self.write_message('message received %s' % message)
         if message == "HUMIDIFIER_ON":
-            humidifierOn()
+            GPIO.output(humidifierPin, GPIO.LOW)
         if message == "HUMIDIFIER_OFF":
-            humidifierOff()
+            GPIO.output(humidifierPin, GPIO.HIGH)
         if message == "ADAFRUIT_READ":
-            readAdafruitSensor()
+            humidity, temperature = Adafruit_DHT.read_retry(
+                sensor, adafruitPin)
+            if humidity is not None and temperature is not None:
+                print(
+                    'Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
+            else:
+                print('Failed to get reading. Try again!')
 
     def on_close(self):
         print 'connection closed'
@@ -63,17 +69,9 @@ if __name__ == "__main__":
 # RPi functions
 
 def humidifierOn():
-    GPIO.output(humidifierPin, GPIO.LOW)
 
 
 def humidifierOff():
-    GPIO.output(humidifierPin, GPIO.HIGH)
 
 
 def readAdafruitSensor():
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, adafruitPin)
-
-    if humidity is not None and temperature is not None:
-        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
-    else:
-        print('Failed to get reading. Try again!')
