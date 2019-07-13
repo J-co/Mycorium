@@ -19,6 +19,7 @@
       <p>
         <input type="button" id="humidifier_on" value="Humidifier On" />
         <input type="button" id="humidifier_off" value="Humidifier Off" />
+        <input type="button" id="adafruit_read" value="Read Adafruit" />
       </p>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -41,10 +42,13 @@
         socket.send(message);
       };
       $("#humidifier_on").click(function() {
-        socket.send("humidifier_on");
+        socket.send("HUMIDIFIER_ON");
       });
       $("#humidifier_off").click(function() {
-        socket.send("humidifier_off");
+        socket.send("HUMIDIFIER_OFF");
+      });
+      $("#adafruit_read").click(function() {
+        socket.send("ADAFRUIT_READ");
       });
     </script>
   </body>
