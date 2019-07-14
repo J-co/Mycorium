@@ -28,7 +28,7 @@
       };
 
       socket.onmessage = function(message) {
-        console.log("receiving: " + message.data);
+        console.log(message.data);
         if (message.data.head === "ADAFRUIT_READ") {
           $("temp_humid_data").text(
             "Temperature:" + message.data.body.temperature.toString()
