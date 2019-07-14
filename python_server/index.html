@@ -30,9 +30,9 @@
       socket.onmessage = function(message) {
         console.log(message.data);
         json_message = JSON.parse(message.data);
-        if (message.data.head === "ADAFRUIT_READ") {
+        if (json_message.head === "ADAFRUIT_READ") {
           $("temp_humid_data").text(
-            "Temperature:" + message.data.body.temperature.toString()
+            "Temperature:" + json_message.body.temperature.toString()
           );
         }
       };

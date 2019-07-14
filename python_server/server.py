@@ -31,7 +31,7 @@ class IndexHandler(tornado.web.RequestHandler):
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print 'new connection'
-        self.write_message("connected")
+        # self.write_message("connected")
 
     def on_message(self, message):
         print 'message received %s' % message
