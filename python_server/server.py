@@ -49,7 +49,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
                 self.write_message(json.dumps({'head': 'ADAFRUIT_READ', 'success': True, 'body': {
                                    "temperature": temperature, "humidity": humidity}}))
             else:
-                print('Failed to get reading. Try again!')
+                self.write_message(json.dumps(
+                    {'head': 'ADAFRUIT_READ', 'success': False, 'body': {}}))
 
     def on_close(self):
         print 'connection closed'
