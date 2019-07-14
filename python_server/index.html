@@ -12,15 +12,12 @@
 
   <body>
     <div>
-      <!-- LEDs -->
-      <h2>Play with LED's</h2>
-      <p>Here you can turn on/off LED's connected to the Raspberry PI.</p>
-      Green:
       <p>
         <input type="button" id="humidifier_on" value="Humidifier On" />
         <input type="button" id="humidifier_off" value="Humidifier Off" />
         <input type="button" id="adafruit_read" value="Read Adafruit" />
       </p>
+      <p id="temp_humid_data"></p>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>
@@ -31,8 +28,12 @@
       };
 
       socket.onmessage = function(message) {
-        console.log(message);
         console.log("receiving: " + message.data);
+        if (message.data.head === "ADAFRUIT_READ") {
+          $("temp_humid_data").text(
+            "Temperature:" + message.data.body.temperature.toString()
+          );
+        }
       };
 
       socket.onclose = function() {

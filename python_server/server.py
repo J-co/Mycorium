@@ -34,17 +34,19 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         print 'message received %s' % message
-        self.write_message('message received %s' % message)
+        #self.write_message('message received %s' % message)
         if message == "HUMIDIFIER_ON":
             GPIO.output(humidifierPin, GPIO.LOW)
+            self.write_message({"head": "HUMIDIFIER_ON", "success": True})
         if message == "HUMIDIFIER_OFF":
             GPIO.output(humidifierPin, GPIO.HIGH)
+            self.write_message({"head": "HUMIDIFIER_OFF", "success": True})
         if message == "ADAFRUIT_READ":
             humidity, temperature = Adafruit_DHT.read_retry(
                 sensor, adafruitPin)
             if humidity is not None and temperature is not None:
-                self.write_message(
-                    '<h3>Temp={0:0.1f}*C  Humidity={1:0.1f}% </h3>'.format(temperature, humidity))
+                self.write_message({"head": "ADAFRUIT_READ", "success": True, "body": {
+                                   "temperature": temperature, "humidity": humidity}})
             else:
                 print('Failed to get reading. Try again!')
 
