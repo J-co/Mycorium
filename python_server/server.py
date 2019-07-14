@@ -6,6 +6,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.websocket
+import json
 
 from tornado.options import define, options
 define("port", default=8080, help="run on the given port", type=int)
@@ -45,8 +46,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             humidity, temperature = Adafruit_DHT.read_retry(
                 sensor, adafruitPin)
             if humidity is not None and temperature is not None:
-                self.write_message({"head": "ADAFRUIT_READ", "success": True, "body": {
-                                   "temperature": temperature, "humidity": humidity}})
+                self.write_message(json.dump({"head": "ADAFRUIT_READ", "success": True, "body": {
+                                   "temperature": temperature, "humidity": humidity}}))
             else:
                 print('Failed to get reading. Try again!')
 
