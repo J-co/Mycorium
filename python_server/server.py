@@ -43,7 +43,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             humidity, temperature = Adafruit_DHT.read_retry(
                 sensor, adafruitPin)
             if humidity is not None and temperature is not None:
-                self.write(
+                self.write_message(
                     '<h3>Temp={0:0.1f}*C  Humidity={1:0.1f}% </h3>'.format(temperature, humidity))
             else:
                 print('Failed to get reading. Try again!')
