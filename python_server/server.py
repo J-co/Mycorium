@@ -12,6 +12,8 @@ import json
 from tornado.options import define, options
 define("port", default=8080, help="run on the given port", type=int)
 
+MyControl = Controller()
+
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
@@ -27,13 +29,13 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print 'message received %s' % message
         #self.write_message('message received %s' % message)
         if message == "HUMIDIFIER_ON":
-            Controller.humidifierOn
+            MyControl.humidifierOn()
             self.write_message({"head": message, "success": True})
         if message == "HUMIDIFIER_OFF":
-            Controller.humidifierOff
+            MyControl.humidifierOff()
             self.write_message({"head": message, "success": True})
         if message == "ADAFRUIT_READ":
-            humidity, temperature = Controller.readAdafruit
+            humidity, temperature = MyControl.readAdafruit()
             if humidity is not None and temperature is not None:
                 self.write_message(json.dumps({'head': message, 'success': True, 'body': {
                                    "temperature": temperature, "humidity": humidity}}))
@@ -41,10 +43,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
                 self.write_message(json.dumps(
                     {'head': message, 'success': False, 'body': {}}))
         if message == "LIGHTS_ON":
-            Controller.lightsOn
+            MyControl.lightsOn()
             self.write_message({"head": message, "success": True})
         if message == "LIGHTS_OFF":
-            Controller.lightsOff
+            MyControl.lightsOff()
             self.write_message({"head": message, "success": True})
 
     def on_close(self):
