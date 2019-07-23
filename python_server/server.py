@@ -1,5 +1,5 @@
 
-from MycoriumControls import MycoriumControls
+from MycoriumControls import Controller
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import tornado.httpserver
@@ -27,13 +27,13 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print 'message received %s' % message
         #self.write_message('message received %s' % message)
         if message == "HUMIDIFIER_ON":
-            MycoriumControls.humidifierOn()
+            Controller.humidifierOn
             self.write_message({"head": message, "success": True})
         if message == "HUMIDIFIER_OFF":
-            MycoriumControls.humidifierOff()
+            Controller.humidifierOff
             self.write_message({"head": message, "success": True})
         if message == "ADAFRUIT_READ":
-            humidity, temperature = MycoriumControls.readAdafruit()
+            humidity, temperature = Controller.readAdafruit
             if humidity is not None and temperature is not None:
                 self.write_message(json.dumps({'head': message, 'success': True, 'body': {
                                    "temperature": temperature, "humidity": humidity}}))
@@ -41,10 +41,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
                 self.write_message(json.dumps(
                     {'head': message, 'success': False, 'body': {}}))
         if message == "LIGHTS_ON":
-            MycoriumControls.lightOn()
+            Controller.lightsOn
             self.write_message({"head": message, "success": True})
         if message == "LIGHTS_OFF":
-            MycoriumControls.lightsOff()
+            Controller.lightsOff
             self.write_message({"head": message, "success": True})
 
     def on_close(self):
