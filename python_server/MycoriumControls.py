@@ -1,5 +1,7 @@
 import Adafruit_DHT
 import RPi.GPIO as GPIO
+import time
+import threading
 
 
 class Controller:
@@ -11,6 +13,7 @@ class Controller:
         GPIO.setup(self.humidifierPin, GPIO.OUT)
         # disable humidifier on start up
         GPIO.output(self.humidifierPin, GPIO.HIGH)
+        self.humidityControlActive = False
 
         # Lights Setup
         self.lightsPinA = 5
@@ -25,6 +28,7 @@ class Controller:
         self.adafruitPin = 17
         self.currentTemperature = None
         self.currentHumidity = None
+        self.adafruitMeasuring = False
 
     def humidifierOn(self):
         GPIO.output(self.humidifierPin, GPIO.LOW)
@@ -46,6 +50,37 @@ class Controller:
                 self.sensor, self.adafruitPin)
             if humidity is not None and humidity <= 100 and temperature is not None:
                 break
+            time.sleep(1)
         self.currentHumidity = humidity
         self.currentTemperature = temperature
+        print "Humidity: %f; Temperature: %f" % (humidity, temperature)
         return humidity, temperature
+
+    def startAdafruitMeasuring(self):
+        if self.adafruitMeasuring == True:
+            print "Already Measuring"
+            return
+        self.adafruitMeasuring = True
+
+        def looper():
+            while self.adafruitMeasuring:
+                self.readAdafruit()
+                time.sleep(10)
+        t = threading.Thread(target=looper)
+        t.start()
+
+    def stopAdafruitMeasuring(self):
+        self.adafruitMeasuring = False
+
+    def startHumidityControl(self, humiditySetpoint):
+        self.humidityControlActive = True
+        if self.adafruitMeasuring == False:
+            self.startAdafruitMeasuring()
+        humidityTolerance = 10
+        upperBound = max([humiditySetpoint+humidityTolerance, 100])
+        lowerBound = min([humiditySetpoint-humidityTolerance, 0])
+        while self.humidityControlActive == True:
+            if self.currentHumidity <= lowerBound:
+                self.humidifierOn()
+            if self.currentHumidity > upperBound:
+                self.humidifierOff()

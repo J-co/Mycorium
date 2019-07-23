@@ -42,6 +42,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             else:
                 self.write_message(json.dumps(
                     {'head': message, 'success': False, 'body': {}}))
+        if message == "ADAFRUIT_CONTINOUS_MEASUREMENT_START":
+            MyControl.startAdafruitMeasuring()
+        if message == "ADAFRUIT_CONTINOUS_MEASUREMENT_STOP":
+            MyControl.stopAdafruitMeasuring()
         if message == "LIGHTS_ON":
             MyControl.lightsOn()
             self.write_message({"head": message, "success": True})

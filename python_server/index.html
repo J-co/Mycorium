@@ -18,6 +18,8 @@
         <input type="button" id="lights_on" value="Lights On" />
         <input type="button" id="lights_off" value="Lights Off" />
         <input type="button" id="adafruit_read" value="Read Adafruit" />
+        <input type="button" id="adafruit_start" value="Start Measuring" />
+        <input type="button" id="adafruit_stop" value="Stop Measuring" />
       </p>
       <p id="temp_humid_data"></p>
     </div>
@@ -64,6 +66,11 @@
       $("#adafruit_read").click(function() {
         socket.send("ADAFRUIT_READ");
       });
+      $("#adafruit_start").click(function() {
+        socket.send("ADAFRUIT_CONTINOUS_MEASUREMENT_START");
+      });
+      $("#adafruit_stop").click(function() {
+        socket.send("ADAFRUIT_CONTINOUS_MEASUREMENT_STOP");
     </script>
   </body>
 </html>
