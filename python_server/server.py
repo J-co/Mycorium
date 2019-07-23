@@ -21,6 +21,10 @@ GPIO.output(humidifierPin, GPIO.HIGH)  # disable humidifier on start up
 # Lights Setup
 lightsPinA = 5
 lightsPinB = 22
+GPIO.setup(lightsPinA, GPIO.OUT)
+GPIO.setup(lightsPinB, GPIO.OUT)
+GPIO.output(lightsPinA, GPIO.HIGH)  # disable lights on start up
+GPIO.output(lightsPinB, GPIO.HIGH)  
 
 # Adafruit Sensor Setup
 sensor = Adafruit_DHT.DHT11
