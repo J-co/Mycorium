@@ -31,7 +31,7 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>
-      var socket = new WebSocket("ws://raspberrypi:8080/ws");
+      var socket = new WebSocket("ws://raspberrypi:80/ws");
 
       socket.onopen = function() {
         console.log("connected");
