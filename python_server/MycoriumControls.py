@@ -19,6 +19,7 @@ class Controller:
         # Lights Setup
         self.lightsPinA = 5
         self.lightsPinB = 22
+        self.lightControlActive = False
         GPIO.setup(self.lightsPinA, GPIO.OUT)
         GPIO.setup(self.lightsPinB, GPIO.OUT)
         GPIO.output(self.lightsPinA, GPIO.HIGH)  # disable lights on start up
