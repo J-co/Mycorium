@@ -31,10 +31,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         if message == "HUMIDIFIER_ON":
             MyControl.humidifierOn()
             self.write_message({"head": message, "success": True})
-        if message == "HUMIDIFIER_OFF":
+        elif message == "HUMIDIFIER_OFF":
             MyControl.humidifierOff()
             self.write_message({"head": message, "success": True})
-        if message == "ADAFRUIT_READ":
+        elif message == "ADAFRUIT_READ":
             humidity, temperature = MyControl.readAdafruit()
             if humidity is not None and temperature is not None:
                 self.write_message(json.dumps({'head': message, 'success': True, 'body': {
@@ -42,16 +42,25 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             else:
                 self.write_message(json.dumps(
                     {'head': message, 'success': False, 'body': {}}))
-        if message == "ADAFRUIT_CONTINOUS_MEASUREMENT_START":
+        elif message == "ADAFRUIT_CONTINUOUS_MEASUREMENT_START":
             MyControl.startAdafruitMeasuring()
-        if message == "ADAFRUIT_CONTINOUS_MEASUREMENT_STOP":
+        elif message == "ADAFRUIT_CONTINUOUS_MEASUREMENT_STOP":
             MyControl.stopAdafruitMeasuring()
-        if message == "LIGHTS_ON":
+        elif message == "LIGHTS_ON":
             MyControl.lightsOn()
             self.write_message({"head": message, "success": True})
-        if message == "LIGHTS_OFF":
+        elif message == "LIGHTS_OFF":
             MyControl.lightsOff()
             self.write_message({"head": message, "success": True})
+        elif message == "LIGHTS_CONTROL_ON":
+            MyControl.startLightControl(8, 20)
+            self.write_message({"head": message, "success": True})
+        elif message == "LIGHTS_CONTROL_OFF":
+            MyControl.stopLightControl()
+            self.write_message({"head": message, "success": True})
+        else:
+            self.write_message(
+                {"head": message, "success": False, "body": "Unknown command"})
 
     def on_close(self):
         print 'connection closed'

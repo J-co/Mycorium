@@ -1,6 +1,7 @@
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import time
+import datetime
 import threading
 
 
@@ -73,14 +74,46 @@ class Controller:
         self.adafruitMeasuring = False
 
     def startHumidityControl(self, humiditySetpoint):
+        if self.humidityControlActive == True:
+            print "Already active"
+            return
         self.humidityControlActive = True
         if self.adafruitMeasuring == False:
             self.startAdafruitMeasuring()
         humidityTolerance = 10
         upperBound = max([humiditySetpoint+humidityTolerance, 100])
         lowerBound = min([humiditySetpoint-humidityTolerance, 0])
-        while self.humidityControlActive == True:
-            if self.currentHumidity <= lowerBound:
-                self.humidifierOn()
-            if self.currentHumidity > upperBound:
-                self.humidifierOff()
+
+        def looper():
+            while self.humidityControlActive == True:
+                if self.currentHumidity <= lowerBound:
+                    self.humidifierOn()
+                if self.currentHumidity > upperBound:
+                    self.humidifierOff()
+        t = threading.Thread(target=looper)
+        t.start()
+
+    def stopHumidityControl(self):
+        self.humidityControlActive = False
+
+    def startLightControl(self, beginTime, endTime):
+        if self.lightControlActive == True:
+            print "Light Control already active"
+            return
+        self.lightControlActive = True
+
+        def looper():
+            while self.lightControlActive:
+                currentTime = datetime.datetime.now().time()
+                currentHour = currentTime.hour
+                currentMinute = currentTime.minute
+                if currentHour >= beginTime and currentHour < endTime:
+                    self.lightsOn()
+                else:
+                    self.lightsOff()
+                time.sleep(60)
+        t = threading.Thread(target=looper)
+        t.start()
+
+    def stopLightControl(self):
+        self.lightControlActive = False
